@@ -1,23 +1,40 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 	<head>
+		<link type="text/css" rel="stylesheet" href="{% static 'style.css' %}" />
+		<meta charset="utf-8" />
 		<title>vinylmaps</title>
 	</head>
 	<body>
-		<div id="wrapper" style="width:1024px;margin:auto">
-			<div style="font-size:3em;height:50px;line-height:30px;text-align:center;float:bottom;background:#EEEEDD">vinylmaps <span style="font-size:12px;vertical-align:20px;">helping you get lost in sound</span></div>
-			{% include 'includes/menu.html' %}
-			<div id="midwrapper">
-				<div id="sidewrapper">
-					{% include 'includes/sidemenu.html' %}
-				</div>
-				<div id="bodywrapper">
-					{% block body %}
-					Stuff
-					{% endblock %}
+		<div class="main">
+			<div class="header">
+				<div id="textlogo">
+					vinylmaps<br/>
+					<span>
+						helping you get lost in sound
+					</span>
 				</div>
 			</div>
-			<div style="text-align:center;background:#EEEEDD">Pointless footer.</div>
+			<div class="topmenu">
+				{% include 'includes/topmenu.html' %}
+			</div>
+			<div class="nav">
+				{% include 'includes/navmenu.html' %}
+			</div>
+			<div class="content">
+				{% block content %}
+				{% endblock %}
+			</div>
+			<div class="footer">
+				This the footer, I think.<br />
+				<br />
+				Do not view this website with any shoelaces or sharp objects in your vicinity.<br />
+			</div>
+		</div>
+		<div id="gw2holder">
+			<div id="gw2nochar">
+			</div>
 		</div>
 	</body>
 </html>

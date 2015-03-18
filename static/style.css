@@ -1,0 +1,300 @@
+/* This is a CSS learning experience */
+
+body
+{
+margin-bottom: 0px;
+margin-top: 10px;
+background-color: #777777;
+}
+
+div.main
+{
+margin: auto;
+width: 800px;
+border: 1px solid black;
+border-radius: 10px;
+box-shadow: 0px 0px 50px 5px black;
+overflow: hidden;
+}
+
+div.header
+{
+color: #FFFFFF;
+/*
+animation: animheader 3s;
+-moz-animation: animheader 3s;
+-webkit-animation: animheader 3s;
+-o-animation: animheader 3s;
+*/
+background-color: #1A481A;
+padding: 10px;
+text-align: center;
+width: 780px;
+}
+
+div.topmenu
+{
+background-color: #1a481a;
+width:100%;
+text-align: center;
+list-style-type: none;
+padding: 15px 0 2px 0;
+}
+
+div.topmenu ul
+{
+width: 100%;
+text-align: center;
+padding-left: 0;
+color: #F0E878;
+border-top: 1px dashed #77AA77;
+border-bottom: 1px dashed #77AA77;
+}
+
+div.topmenu li
+{
+display: inline;
+}
+div.topmenu li + li:before
+{
+content:"| ";
+margin: 0 20px 0 20px;
+}
+div.topmenu a
+{
+text-decoration: none;
+font-family: Monospace;
+font-size: 2em;
+color: inherit;
+font-weight: bold;
+}
+
+div.topmenu a:hover
+{
+color: #FFFFFF;
+text-decoration: none;
+}
+
+div.nav
+{
+background: #222222;
+border-right: 1px solid black;
+color: #DADADA;
+float: left;
+font-family: "Tahoma";
+height: 800px;
+margin-left: auto;
+padding: 20px 5px 20px;
+text-align: center;
+width: 200px;
+}
+
+input.input
+{
+border: 1px solid black;
+border-radius: 10px;
+box-shadow: 0px 0px 15px 1px #CCCCCC;
+margin-bottom: 7px;
+margin-top: 7px;
+padding: 5px;
+}
+
+input.submit
+{
+background-color: #101010;
+border: 1px solid white;
+border-radius: 4px;
+color: #999999;
+padding: 2px 4px;
+margin: 2px 0px 2px;
+}
+
+input.submit:hover
+{
+background-color: #505050;
+color: #D0D0D0;
+}
+
+input.input:focus
+{
+background-color: #AACCAA;
+}
+
+a
+{
+color: #339933;
+font-family: "Tahoma";
+font-size: 0.9em;
+text-decoration: none;
+}
+
+a:hover
+{
+color: #66FF66;
+text-decoration: none;
+}
+
+ul.navmenu
+{
+list-style-type: none;
+padding-left: 0;
+margin-top: 0px;
+margin-bottom: 20px;
+}
+
+ul.navmenu a
+{
+color: #DADADA;
+font-family: "Tahoma";
+font-size: 0.9em;
+text-decoration: none;
+border-bottom: 1px dashed;
+}
+
+ul.navmenu a:hover
+{
+color: #FFFFFF;
+text-decoration: none;
+border-bottom: 1px dashed #AAEEAA
+}
+
+ul.navmenu h5
+{
+margin: 0px;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+margin: 5px 0px 10px;
+text-align: center;
+}
+
+.nav i
+{
+float: right;
+font-size: 0.55em;
+margin-bottom: 5px;
+}
+
+
+
+div.content
+{
+background-color: #333333;
+color: #FFFFFF;
+height: 800px;
+margin-left: 210px;
+padding: 20px;
+}
+
+table
+{
+}
+
+td
+{
+text-align: right;
+}
+
+td + td
+{
+text-align: left;
+}
+
+span.error
+{
+color: #FF2222;
+}
+
+div.footer
+{
+background-color: #1A481A;
+border-top: 1px dotted #666666;
+clear: left;
+color: white;
+font-family: "Tahoma";
+font-size: 0.75em;
+padding: 10px;
+padding-top: 5px;
+text-align: center;
+}
+
+#gw2holder
+{
+bottom: -15px;
+height: 100px;
+position:fixed;
+left: 50%;
+width: 456px;
+
+}
+
+#gw2nochar
+{
+background: url('egg.png');
+right: 0px;
+height: 100px;
+opacity: 0.1;
+position: absolute;
+width: 50px;
+transition: opacity 3s ease;
+-moz-transition: opacity 3s ease;
+-webkit-transition: opacity 3s ease;
+-o-transition: opacity 3s ease;
+}
+
+#gw2nochar:hover
+{
+opacity: 1;
+right: 0px;
+height: 100px;
+position: absolute;
+width: 100px;
+cursor: help;
+}
+
+#textlogo
+{
+font-size: 3em;
+height: 50px;
+line-height: 30px;
+text-align: center;
+float: bottom;
+margin-left: -50px;
+}
+
+#textlogo span
+{
+font-size: 0.28em;
+font-style: italic;
+vertical-align: 20px;
+margin-left: 100px;
+line-height: 40px;
+
+}
+
+/*
+@keyframes animheader
+{
+from {color: #1A481A;}
+to {color: #FFFFFF;}
+}
+
+@-moz-keyframes animheader
+{
+from {color: #1A481A;}
+to {color: #FFFFFF;}
+}
+
+@-webkit-keyframes animheader
+{
+from {color: #1A481A;}
+to {color: #FFFFFF;}
+}
+
+@-o-keyframes animheader
+{
+from {color: #1A481A;}
+to {color: #FFFFFF;}
+}
+*/

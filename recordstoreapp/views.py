@@ -58,10 +58,23 @@ def forthcoming(request, genre_name_slug):
         return HttpResponse("Forward genre fail slug")
     return HttpResponse("Forwardcat" + genreTable.name)
 
-
-def newReleases(request, genre_name_slug):
-    return HttpResponse("New Release page")
+def fetch_releases(genre_url, type='new'):
+	release_list = []
+	if genre_url == 'all':
+		release_list = ['foobar']
+		#fetch from all genres
+		
+	return release_list
 	
-def search(request, query):
-	return HttpResponse("foobar")
+def new_releases(request, genre_url='all'):
+	context_dict = {}
+	context_dict['release_list'] = fetch_releases(genre_url, type)
+    
+	return render(request, 'releases.html', context_dict)
+	
+def search(request):
+	context_dict = {}
+	#GET['q']
+
+	return render(request, 'search.html', context_dict)
 

@@ -4,25 +4,28 @@ from models import Genre
 
 # Create your views here.
 
-def baseRedirect(request):
-    return HttpResponseRedirect('/vinylmaps/')
-
 #Home page
 def index(request):
-    return HttpResponse("index page")
+	context_dict = {}
+
+	return render(request, 'index.html', context_dict)
 
 #About page with description of tech used etc.
 def about(request):
-    return HttpResponse("About page")
+	context_dict = {}
+
+	return render(request, 'about.html', context_dict)
 
 #Email addresses or maybe a form to request a new item be added to the db.
 def contact(request):
-    return HttpResponse("Contact Page")
+	context_dict = {}
+
+	return render(request, 'contact.html', context_dict)
 
 #Used when one clicks a genre to get a genre-specific version of the front page.
 def genre(request,genre_name_slug):
     if genre_name_slug is None:
-        return HttpResponseRedirect('/vinylmaps/')
+        return HttpResponseRedirect('/')
     try:
         #note slugs are unique so this will return one row always
         genreTable = Genre.objects.get(slug=genre_name_slug)
@@ -58,4 +61,7 @@ def forthcoming(request, genre_name_slug):
 
 def newReleases(request, genre_name_slug):
     return HttpResponse("New Release page")
+	
+def search(request, query):
+	return HttpResponse("foobar")
 

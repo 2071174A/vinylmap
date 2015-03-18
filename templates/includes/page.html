@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>vinylmaps</title>
+	</head>
+	<body>
+		<div id="wrapper" style="width:1024px;margin:auto">
+			<div style="font-size:3em;height:50px;line-height:30px;text-align:center;float:bottom;background:#EEEEDD">vinylmaps <span style="font-size:12px;vertical-align:20px;">helping you get lost in sound</span></div>
+			{% include 'includes/menu.html' %}
+			<div id="midwrapper">
+				<div id="sidewrapper">
+					{% include 'includes/sidemenu.html' %}
+				</div>
+				<div id="bodywrapper">
+					{% block body %}
+					Stuff
+					{% endblock %}
+				</div>
+			</div>
+			<div style="text-align:center;background:#EEEEDD">Pointless footer.</div>
+		</div>
+	</body>
+</html>

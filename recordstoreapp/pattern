@@ -1,0 +1,12 @@
+title==record|title;;
+artist==artist;;
+genre==genre;;
+label==label;;
+price==price;£[0-9]+(\.[0-9]+)?;
+cat_no==;[A-Z]+[0-9]+;
+link==info|details;;href
+cover==art|cover;.jpg|.png|.jpeg;src
+//word in text - next node<0>
+//word in tag.attr - text<1>
+//pattern in text - text<2>
+//.jpg in tag.attr - attribute<3>

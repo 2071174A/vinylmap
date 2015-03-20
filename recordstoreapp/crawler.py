@@ -135,7 +135,7 @@ class Crawler:
                 try:
                     tl=''
                     if not data[i].has_key('artist'):
-                        tl=data[i]['title'].split('-') if data[i].has_key('title') else data[i]['artist'].split('-')[0]
+                        tl=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])[0]
                     else:
                         tl=data[i]['artist']
                     record=Record.objects.get(title=tl)

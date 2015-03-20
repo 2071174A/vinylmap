@@ -12,7 +12,6 @@ def index(request):
     return render(request, 'index.html', context_dict)  # About page with description of tech used etc.
 def about(request):
     context_dict = {}
-
     return render(request, 'about.html', context_dict)
 
 
@@ -32,7 +31,7 @@ def search(request):
         rec=cursor.fetchall()
         cd['res'] = rec
         print rec
-    return render(request, 'index.html', {})
+    return render(request, 'index.html', cd)
 
 
 def new_releases(request):

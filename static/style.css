@@ -11,7 +11,6 @@ div.main
 {
 margin: auto;
 width: 800px;
-height: 1250px;
 border: 1px solid black;
 border-radius: 10px;
 box-shadow: 0px 0px 50px 5px black;
@@ -83,7 +82,7 @@ border-right: 1px solid black;
 color: #DADADA;
 float: left;
 font-family: "Tahoma";
-height: 1000px;
+height: 800px;
 margin-left: auto;
 padding: 20px 5px 20px;
 text-align: center;
@@ -183,10 +182,23 @@ div.content
 {
 background-color: #333333;
 color: #FFFFFF;
-height:1000px;
+height: 800px;
 margin-left: 210px;
 padding: 20px;
-text-align: center;
+}
+
+table
+{
+}
+
+td
+{
+text-align: right;
+}
+
+td + td
+{
+text-align: left;
 }
 
 span.error
@@ -286,19 +298,3 @@ from {color: #1A481A;}
 to {color: #FFFFFF;}
 }
 */
-
-#releasewrapper
-{
-height:1000px;
-}
-
-div.releasebox
-{
-text-align:center;
-float: left;
-width: 161px;
-height: 200px;
-border: 1px solid black;
-padding: 5px;
-margin: 5px;
-}

@@ -53,4 +53,4 @@ def record_view(request):
                 record = Record.objects.get(id=record_id)
                 context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
                 context_dict['rec'] = record
-    return render(request, 'index.html', context_dict)
+    return render(request, 'record.html', context_dict)

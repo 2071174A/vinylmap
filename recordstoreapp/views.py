@@ -7,9 +7,15 @@ from django.db import connection
 # Home page
 def index(request):
     context_dict = {}
-    rec_list = Record.objects.all()[:25]
-    context_dict['rec_list'] = rec_list
+    rec_list = Record.objects.all()
+    total=len(rec_list)
+    pg=int(request.GET['page']) if 'page' in request.GET else 1
+    ub=min(pg*12,total-pg*12)
+    #[:12]
+    context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
+    context_dict['range']=range(1,int(total/12))
     return render(request, 'index.html', context_dict)  # About page with description of tech used etc.
+
 def about(request):
     context_dict = {}
     return render(request, 'about.html', context_dict)

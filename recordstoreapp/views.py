@@ -31,7 +31,7 @@ def search(request):
         rec=cursor.fetchall()
         cd['res'] = rec
         print rec
-    return render(request, 'index.html', cd)
+    return render(request, 'search.html', cd)
 
 
 def new_releases(request):

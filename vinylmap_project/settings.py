@@ -60,14 +60,17 @@ ROOT_URLCONF = 'vinylmap_project.urls'
 
 WSGI_APPLICATION = 'vinylmap_project.wsgi.application'
 
+SETTINGS_DIR = os.path.dirname(__file__)
+PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'vinyl.db')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': DATABASE_PATH,
     }
 }
 

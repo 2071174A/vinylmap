@@ -14,4 +14,5 @@ urlpatterns = patterns('',
     #url(r'^genre/(?P<genre_name_url>[\w\-]+)/$', views.genre, name='genre'),
     url(r'^contact/', views.contact, name='contact'),
     url(r'^search/', views.search, name = 'search'),
+	url(r'^records/$', views.record_view, name='records'),
     )

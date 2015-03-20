@@ -48,6 +48,7 @@ class Tag:
         while t!=tar:
             t=t.par
             route.append(t)
+        route=route[:-1]
         return route[::-1]
 
 
@@ -58,6 +59,7 @@ class Tag:
         while root.par!=None:
             root=root.par
             route.append(root)
+        route=route[:-1]
         return route[::-1]
     """
     :arg function-labda function returns value for which the function is true
@@ -127,7 +129,7 @@ class Match:
 class HtmlPage:
 
     def __init__(self,page):
-        rx=re.compile(r'((?<=\>)\s+(?=\<))|(<!doctype html.*>)',re.IGNORECASE)
+        rx=re.compile(r'((?<=\>)\s+(?=\<))|(<!doctype html.*>)|(<!--[\s\S]*?-->)',re.IGNORECASE)
         self.page=rx.sub('',page)
         self.page=re.sub(r'(<(script|head|footer)>).*(</(script|head|footer)>)','',self.page)#filter page
         self.root=None
@@ -145,7 +147,7 @@ class HtmlPage:
         stack=[]
         while(i<len(self.page) and self.page[i]!='>'):
             if self.page[i].isspace() and not prop:
-                if tag.name=="":tag.name=current_string.strip('<')
+                if tag.name=="":tag.name=current_string.strip('</')
                 current_string=""
             elif self.page[i:i+2]=='/>':#self.page[i]=="/" and self.page[i+1]=='>':
                 tag.closed=True
@@ -163,10 +165,13 @@ class HtmlPage:
                 else:
                     stack.append(self.page[i])
             else:
-                current_string += str(self.page[i])
+                current_string += self.page[i]
             i+=1
-        a=self.page[i-1]
-        tag.name=current_string.strip('<') if current_string!="" else tag.name
+        #=self.page[i-1]
+        if props_string!='' and current_string!='':
+            props[props_string]=current_string
+            current_string=''
+        tag.name=current_string.strip('</') if current_string!="" else tag.name
         tag.attr=props
         return(tag,i)
 
@@ -176,14 +181,11 @@ class HtmlPage:
         i=0
         while(i<len(self.page)):
             if(self.page[i]=="<"):
-                if self.page[i+1]=='!':
-                    i+=1
-                    while self.page[i-2:i]!='->':
-                        i+=1
                 if self.page[i+1]=="/":
-                    t=self.closeBracket(i+2)
+                    t=self.closeBracket(i+1)
                     not_found=True
-                    while not_found:
+                    while not_found and len(stack)>0:
+                        #print stack[-1].name
                         if stack[-1].name==t[0].name:
                             not_found=False
                             if len(stack)==1:
@@ -216,31 +218,39 @@ class HtmlPage:
         return p
 	
     def goTo(self,start,xpath):
-        xp=xpath.split("/")
+        if '{'in xpath and not xpath[0]=='{':
+            xa=xpath[xpath.index("{"):xpath.index('}')+1]
+            xpath=xpath[:xpath.index("{")]
+            xp=xpath.split("/")
+            xp.append(xa)
+        else:
+            xp=xpath.split("/")
         ix=start
         for i in range(len(xp)):
-            f=lambda x:x.name==xp[i]
+            f=lambda x:x.name==xp[i].strip(' ')
+            if xp[i]=='':continue
             if xp[i]=="*":
                 return ix.children,""
-            elif xp[i].contains("["):
-                tag=re.search(r'.*(?=\s\[)',xp[i])
+            elif xp[i].startswith("@") or '{' in xp[i]:#.contains('{'):
+                return ix,xp[i]
+            elif '[' in  xp[i]:#.contains("["):
+                #warning do not use regex python is NOT a real language and does not support it!!!
+                tag=xp[i][:xp[i].index('[')-1]
                 p=self.getProps(xp[i][xp[i].index("[")+1:xp[i].index(']')].split(";"))
-                sp=set(p)
-                f=lambda x:x.name==tag and len(set(x.attr.items())& sp)==len(p)
-            elif xp[i].conatins('='):
+                #sp=set(p)
+                f=lambda x:x.name==tag and x.attr==p
+            elif '=' in xp[i]:#.conatins('='):
                 s=xp[i].split("=")
                 s[1]=s[1].strip("'")
                 f=lambda x:x.name==s[0] and x.text==s[1]
-            elif xp[i].startswith("@") or xp[i].contains('{'):
-                return ix,xp[i]
-                pass
+
             """elif xp[i].startswith("@"):
                 return ix.attr[xp[i].strip('@')]
             elif xp[i].contains('{'):
                 return ix,xp[i]
             """
             ix=ix.find(f)
-            if ix==None:return None
+            if ix==None:return None,None
         return ix,None
 
     def getValue(self,start,p):
@@ -251,17 +261,17 @@ class HtmlPage:
         return t.text
 
     def getFromXPath(self,s):
-        t,s=self.goTo(s,self.root)
+        if s=='':return None
+        t,s=self.goTo(self.root,s)
         if t is None:return None
-        tmpl=s.split(',')
+        tmpl=s.strip('{}').split(',')
         tmpl=[tmpl[i].split(':') for i in range(len(tmpl))]
         res=[]
         td={tmpl[i][0]:tmpl[i][1] for i in range(len(tmpl))}
         for i in range(len(t.children)):
             r=copy.deepcopy(td)
             for k in r:
-                tc=self.getValue(t,r[k])
-                if tc=='':return None
+                tc=self.getValue(t.children[i],r[k])
                 r[k]=tc
             res.append(r)
         return res
@@ -322,14 +332,14 @@ class HtmlPage:
                                 candidates[str(tr)]=Match(tr,[t])
                         #targets.remove(t)
         #candidates={k:list(set(candidates[k])) for k in candidates}
-        candidates=candidates.items()
-        candidates.sort(key=lambda x:len(x[1].words),reverse=True)
+        candidates=candidates.values()
+        candidates.sort(key=lambda x:len(x.words),reverse=True)
         return candidates
 
     def pathToString(self,path):
         s='/'
         for i in range(len(path)):
-            s+=path[i].toString(lambda x:not x[1].isdigit() and not x[0]=='href',False)+'/'
+            s+=path[i].toString(lambda x:not x[1].isdigit() and not '/' in x[1] and not ';' in x[1],False)+'/'
         return s
 
     def getExactPath(self,c,t,wds):
@@ -340,27 +350,32 @@ class HtmlPage:
             for j in range(len(l)):
                 m=c.belongsTo(l[j].text,w)
                 if m=='1':
-                    wl.append(w+':'+self.pathToString(l[j].pathTo(t)))
+                    tr=l[j] if l[j].text!='' else l[j].find(lambda x:x.text!='')
+                    wl.append(w+':'+self.pathToString(tr.pathTo(t)))
                     l.remove(l[j])
                     break
                 elif m=='2':
                     if j+1>len(l)-1:break
-                    wl.append(w+':'+self.pathToString(l[j+1].pathTo(t)))
+                    tr=l[j+1] if l[j+1].text!='' else l[j+1].find(lambda x:x.text!='')
+                    wl.append(w+':'+self.pathToString(tr.pathTo(t)))
                     l.remove(l[j+1])
                     l.remove(l[j])
                     break
                 elif m=='0':
                     m=c.belongsTo(','.join(l[j].attr.values()),w)
                     if m=='1' or m=='2':
-                        wl.append(w+':'+self.pathToString(l[j].pathTo(t)))
+                        tr=l[j] if l[j].text!='' else l[j].find(lambda x:x.text!='')
+                        wl.append(w+':'+self.pathToString(tr.pathTo(t)))
                         l.remove(l[j])
                         break
                     elif m!='0':
-                        wl.append(w+':'+self.pathToString(l[j].pathTo(t))+'@'+m)
+                        tr=l[j] if m in l[j].attr.keys() else l[j].find(lambda x:m in x.attr.keys())
+                        wl.append(w+':'+self.pathToString(tr.pathTo(t))+'@'+m)
                         l.remove(l[j])
                         break
                 else:
-                    wl.append(w+':'+self.pathToString(l[j].pathTo(t))+'@'+m)
+                    tr=l[j] if m in l[j].attr.keys() else l[j].find(lambda x:m in x.attr.keys())
+                    wl.append(w+':'+self.pathToString(tr.pathTo(t))+'@'+m)
                     l.remove(l[j])
                     break
         res=','.join(wl)
@@ -368,17 +383,19 @@ class HtmlPage:
 
     def buildXPath(self,c):
         stree=self.identifySubtree(c)
-        missing=list( set(c.patterns())-set(stree[0][1].words))
-        target=stree[0][1].obj.par
-        xp='{'+self.getExactPath(c,stree[0][1].obj.par,stree[0][1].words)
+        if len(stree)==0:return ''
+        missing=list( set(c.patterns())-set(stree[0].words))
+        target=stree[0].obj.par
+        xp='{'+self.getExactPath(c,stree[0].obj.par,stree[0].words)
         if len(missing)>0:
-            for i in range(len(stree[0][1].obj.par.children)):
-                if not stree[0][1].obj.par.children[i]==stree[0][1].obj:
-                    s=self.getExactPath(c,stree[0][1].obj.par.children[i],missing)
+            for i in range(len(stree[0].obj.par.children)):
+                if not stree[0].obj.par.children[i]==stree[0].obj:
+                    s=self.getExactPath(c,stree[0].obj.par.children[i],missing)
                     if s!='':
                         xp+=','+s
                         break
         xp+='}'
         target= target if len(target.children)>2 else target.findParent(lambda x:len(x.children)>2)
+        if target is None :return ''
         xp=self.pathToString(target.pathToRoot()) + xp
         return xp

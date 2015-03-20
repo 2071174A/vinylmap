@@ -287,11 +287,6 @@ to {color: #FFFFFF;}
 }
 */
 
-#releasewrapper
-{
-height:1000px;
-}
-
 div.releasebox
 {
 text-align:center;
@@ -301,4 +296,8 @@ height: 200px;
 border: 1px solid black;
 padding: 5px;
 margin: 5px;
+}
+
+div.pages
+{
 }

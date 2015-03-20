@@ -144,14 +144,14 @@ class Crawler:
                     if store is not None :record.stores.add(store)
                 except Record.DoesNotExist,KeyError:
                     record=None
-                    #if not data[i].has_key('artist') or not data[i].has_key('title'):
-                    #    s=data[i]['title'].split('-') if data[i].has_key('title') else data[i]['artist'].split('-')
-                    #    record=Record(title=unicode(s[1]),artist=unicode(s[0]),
-                    #         cover=unicode(data[i]['cover']) if data[i].has_key('cover') else '',cat_no=unicode(data[i]['cat_no']) if data[i].has_key('cat_no') else ''
-                    #         ,label=unicode(data[i]['label']) if data[i].has_key('label') else '',
-                    #         genre=unicode(data[i]['genre']) if data[i].has_key('genre') else '')
-                    #else:
-                    record=Record(title=data[i]['title'] if data[i].has_key('title') else '',artist=data[i]['artist'] if data[i].has_key('artist') else '',
+                    if not data[i].has_key('artist') or not data[i].has_key('title'):
+                        s=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])
+                        record=Record(title=unicode(s[1]),artist=unicode(s[0]),
+                             cover=unicode(data[i]['cover']) if data[i].has_key('cover') else '',cat_no=unicode(data[i]['cat_no']) if data[i].has_key('cat_no') else ''
+                             ,label=unicode(data[i]['label']) if data[i].has_key('label') else '',
+                            genre=unicode(data[i]['genre']) if data[i].has_key('genre') else '')
+                    else:
+                        record=Record(title=data[i]['title'] if data[i].has_key('title') else '',artist=data[i]['artist'] if data[i].has_key('artist') else '',
                              cover=data[i]['cover'] if data[i].has_key('cover') else '',cat_no=data[i]['cat_no'] if data[i].has_key('cat_no') else ''
                              ,label=data[i]['label'] if data[i].has_key('label') else '',
                              genre=data[i]['genre'] if data[i].has_key('genre') else '')

@@ -33,15 +33,26 @@
 {% if rec_list %}
     {% for record in rec_list %}
     <div class="box">
-        <div></div>
         <div class="tl">
-            <a href="/records/?record_id={{record.id}}">record.title</a>
+            <a href="/records/?record_id={{record.id}}">{{record.title}}</a>
         </div>
-        <div class="art">record.artist</div>
+        <div class="art">{{record.artist}}</div>
     </div>
     {% endfor %}
 {% else %}
+{% if rec %}
+    <h1> {{rec.artist}}{{rec.title}} </h1>
+    <strong>label:</strong>{{rec.label}}<br/>
+    <strong>cat_number:</strong>{{rec.cat_no}}<br/>
+{% if stores %}
+    {% for s in stores %}
+        {{store.link}}<br/>
+        <strong>price:</strong>{{store.price}}
+    {% endfor %}
+{% endif %}
+{% else %}
 No data available<br/>
 <br/>
+{% endif %}
 {% endif %}
 {% endblock %}

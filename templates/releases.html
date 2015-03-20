@@ -17,6 +17,9 @@
 			</div>
 		</div>
 		{% endfor %}
+		{% for i in range %}
+		<a href="{%url 'new_releases' %}?page={{i}}">{{i}}</a>
+		{% endfor %}
 	{% else %}
 	No data available<br/>
 	<br/>

@@ -4,7 +4,6 @@ from recordstoreapp import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
-    url(r'^index/$', views.index, name='index'),
     url(r'^about/$', views.about, name='about'),
     #url(r'^backcatalogue/$', views.backCat, name='genrebackcatalogue'),
     #url(r'^future/$', views.forthcoming, name='genreforthcoming'),

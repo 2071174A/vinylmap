@@ -146,7 +146,6 @@ class Crawler:
                     record=None
                     if not data[i].has_key('artist') or not data[i].has_key('title'):
                         s=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])
-                        if len(s)<2:continue
                         record=Record(title=unicode(s[1]),artist=unicode(s[0]),
                              cover=unicode(data[i]['cover']) if data[i].has_key('cover') else '',cat_no=unicode(data[i]['cat_no']) if data[i].has_key('cat_no') else ''
                              ,label=unicode(data[i]['label']) if data[i].has_key('label') else '',

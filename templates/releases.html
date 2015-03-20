@@ -1,16 +1,25 @@
 {% extends 'includes/page.html' %}
-{% block content %}{% if rec_list %}
-    {% for record in rec_list %}
-    <div class="box">
-        <div></div>
-        <div class="tl">
-            <a href="/records/?record_id={{record.id}}">{{record.title}}</a>
-        </div>
-        <div class="art">{{record.artist}}</div>
-    </div>
-    {% endfor %}
-{% else %}
-No data available<br/>
-<br/>
-{% endif %}
+{% block content %}
+<div id="releasewrapper">
+	{% if rec_list %}
+		{% for record in rec_list %}
+		<div class="releasebox">
+			<div class="cover">
+				<a href="/records/?record_id={{record.id}}">
+					<img src="/static/egg.png"/>
+				</a>
+			</div>
+			<div class="title">
+				<a href="/records/?record_id={{record.id}}">{{record.title}}</a>
+			</div>
+			<div class="artist">
+				{{record.artist}}
+			</div>
+		</div>
+		{% endfor %}
+	{% else %}
+	No data available<br/>
+	<br/>
+	{% endif %}
+</div>
 {% endblock %}

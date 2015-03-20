@@ -36,7 +36,7 @@ def search(request):
 
 def new_releases(request):
     context_dict = {}
-    rec_list = Record.objects.order_by('-time')[:25]
+    rec_list = Record.objects.order_by('-time')[:12]
     context_dict['rec_list'] = rec_list
 #context_dict['release_list'] = fetch_releases(genre_url, type)
     return render(request, 'releases.html', context_dict)

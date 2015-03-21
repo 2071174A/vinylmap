@@ -27,7 +27,7 @@ def search(request):
 	if 'q' in request.GET and request.GET['q'] != '':
 		q = request.GET['q']
 		cursor = connection.cursor()
-		cursor.execute("SELECT id,title,artist FROM recordstoreapp_record WHERE title like '%" + q + "%' or artist like '%" + q + "%' or label like '%" + q + "%' or cat_no like '%" + q + "%';")
+		cursor.execute("SELECT id,title,artist,cover FROM recordstoreapp_record WHERE title like '%" + q + "%' or artist like '%" + q + "%' or label like '%" + q + "%' or cat_no like '%" + q + "%';")
 		rec_list=cursor.fetchall()
 		
 		total=len(rec_list)
@@ -35,7 +35,7 @@ def search(request):
 		ub=min(pg*12, total)
 
 		context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
-		context_dict['range'] = range(1,int(total/12)+1)
+		context_dict['range']=range(1,int(total/12)+total%12+1)
 		context_dict['q'] = q
 
 	return render(request, 'search.html', context_dict)
@@ -50,7 +50,7 @@ def new_releases(request):
 	ub=min(pg*12, total)
 
 	context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
-	context_dict['range']=range(1,int(total/12)+1)
+	context_dict['range']=range(1,int(total/12)+total%12+1)
 
 	return render(request, 'releases.html', context_dict)
 

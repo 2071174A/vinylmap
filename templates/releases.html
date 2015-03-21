@@ -11,7 +11,11 @@
 			<div class="releasebox">
 				<div class="cover">
 					<a href="/records/?record_id={{record.id}}">
-						<img src="/static/egg.png"/>
+						{% if record.cover %}
+							<img src="{{record.cover}}"/>
+						{% else %}
+							<img src="/static/egg.png"/>
+						{% endif %}
 					</a>
 				</div>
 				<div class="title">

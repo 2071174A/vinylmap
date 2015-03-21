@@ -298,6 +298,12 @@ padding: 5px;
 margin: 5px;
 }
 
+div.releasebox div.cover img
+{
+height: 100px;
+width: 100px;
+}
+
 div.pages
 {
 }

@@ -304,6 +304,12 @@ height: 100px;
 width: 100px;
 }
 
+div.releasebox div.coverbig img
+{
+height: 300px;
+width: 300px;
+}
+
 div.pages
 {
 }

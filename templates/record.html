@@ -1,13 +1,17 @@
 {% extends 'includes/page.html' %}
 {% block content %}
-	{% if rec %}
-			<h1>{{rec.title}}</h1>
-			<div class="cover">
+	{% if record %}
+			<h1>{{record.title}}</h1>
+			<div class="coverbig">
+				{% if record.cover %}
+					<img src="{{record.cover}}"/>
+				{% else %}
 					<img src="/static/egg.png"/>
+				{% endif %}
 			</div>
-			<strong>Artist: </strong> {{rec.artist}}<br/>
-			<strong>Label: </strong> {{rec.label}}<br/>
-			<strong>Catalogue #:</strong> {{rec.cat_no}}<br/>
+			<strong>Artist: </strong> {{record.artist}}<br/>
+			<strong>Label: </strong> {{record.label}}<br/>
+			<strong>Catalogue #:</strong> {{record.cat_no}}<br/>
 		{% if stores %}
 			{% for s in stores %}
 				{{store.link}}<br/>

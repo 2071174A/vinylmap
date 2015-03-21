@@ -56,7 +56,6 @@ def new_releases(request):
 
 
 def record_view(request):
-    # context = RequestContext(request)
     page_id = None
     context_dict = {}
     if request.method == 'GET':
@@ -65,5 +64,5 @@ def record_view(request):
             if record_id:
                 record = Record.objects.get(id=record_id)
                 context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
-                context_dict['rec'] = record
+                context_dict['record'] = record
     return render(request, 'record.html', context_dict)

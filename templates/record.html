@@ -13,10 +13,12 @@
 			<strong>Label: </strong> {{record.label}}<br/>
 			<strong>Catalogue #:</strong> {{record.cat_no}}<br/>
 		{% if stores %}
-			{% for s in stores %}
-				{{store.link}}<br/>
-				<strong>Price: </strong>{{store.price}}
-			{% endfor %}
+			<br/>
+			<table>
+				{% for s in stores %}
+					<tr><td><a href="{{s.link}}">{{s.link}}</a></td><td><strong>Price: </strong>{{s.price}}</td></tr>
+				{% endfor %}
+			</table>
 		{% endif %}
 	{% endif %}
 {% endblock %}

@@ -5,9 +5,9 @@
 			<h1>{{record.title}}</h1>
 			<div class="coverbig">
 				{% if record.cover %}
-					<img src="{% static '' %}{{record.cover}}"/>
+					<img src="{% static record.cover %}"/>
 				{% else %}
-					<img src="/static/egg.png"/>
+					<img src="{% static 'egg.png' %}"/>
 				{% endif %}
 			</div>
 			<strong>Artist: </strong> {{record.artist}}<br/>

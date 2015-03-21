@@ -13,7 +13,7 @@
 				<div class="cover">
 					<a href="/records/?record_id={{record.id}}">
 						{% if record.cover %}
-							<img src="{% static '' %}{{record.cover}}"/>
+							<img src="{% static record.cover %}"/>
 						{% else %}
 							<img src="/static/egg.png"/>
 						{% endif %}

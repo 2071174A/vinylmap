@@ -1,4 +1,5 @@
 {% extends 'includes/page.html' %}
+{% load static %}
 {% block content %}
 	<div class="pages">
 		{% for i in range %}
@@ -12,7 +13,7 @@
 				<div class="cover">
 					<a href="/records/?record_id={{record.id}}">
 						{% if record.cover %}
-							<img src="{{record.cover}}"/>
+							<img src="{% static '' %}{{record.cover}}"/>
 						{% else %}
 							<img src="/static/egg.png"/>
 						{% endif %}

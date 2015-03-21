@@ -2,7 +2,7 @@ __author__ = 'tony'
 import re
 import copy
 from collections import deque
-from classifiers import Classifier,RuleClassifier
+
 
 class Tag:
     def __init__(self):
@@ -129,9 +129,10 @@ class Match:
 class HtmlPage:
 
     def __init__(self,page):
-        rx=re.compile(r'((?<=\>)\s+(?=\<))|(<!doctype html.*>)|(<!--[\s\S]*?-->)',re.IGNORECASE)
+        rx=re.compile(r'((?<=\>)\s+(?=\<))|(<!doctype html.*>)|(<!--[\s\S]*?-->)|(<meta.*>)',re.IGNORECASE)
         self.page=rx.sub('',page)
-        self.page=re.sub(r'(<(script|head|footer)>).*(</(script|head|footer)>)','',self.page)#filter page
+        self.page=re.sub(r'(<(script|head|footer)>).*(</(script|head|footer)>)','',self.page,re.I)#filter page
+        #self.page=re.sub(r'\s{2,}','',self.page)
         self.root=None
         self.buildTree()
 
@@ -333,7 +334,7 @@ class HtmlPage:
                         #targets.remove(t)
         #candidates={k:list(set(candidates[k])) for k in candidates}
         candidates=candidates.values()
-        candidates.sort(key=lambda x:len(x.words),reverse=True)
+        candidates.sort(key=lambda x:(len(x.words),len(x.obj.children)),reverse=True)
         return candidates
 
     def pathToString(self,path):

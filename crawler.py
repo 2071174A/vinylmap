@@ -152,15 +152,24 @@ class Crawler:
                 store=None
                 if all(v=='' for v in data[i].values()):continue
                 if 'link' in data[i].keys():
-                    store=Store(link=unicode(data[i]['link']),price=unicode(data[i]['price']))
-                    store.save()
+                    import HTMLParser
+                    h = HTMLParser.HTMLParser()
+                    try:
+                        from urlparse import urlparse
+                        parsed_uri = urlparse( data[i]['link'] )
+                        domain = '{uri.netloc}'.format(uri=parsed_uri)
+                        store=Store(link=urllib.quote(data[i]['link'],safe="/"),price=h.unescape(data[i]['price']),name=domain)
+                        store.save()
+                    except:
+                        print data[i]['link']
+                        continue
                 try:
                     tl=''
                     if not data[i].has_key('artist'):
                         tl=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])[0]
                     else:
                         tl=data[i]['artist']
-                    record=Record.objects.get(title=tl)
+                    record=Record.objects.get(title=unicode(tl,errors='replace'))
                     record.cover=data[i]['cover'] if record.cover=='' else record.cover
                     record.save()
                     if store is not None :record.stores.add(store)
@@ -169,15 +178,15 @@ class Crawler:
                     if not data[i].has_key('artist') or not data[i].has_key('title'):
                         s=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])
                         if len(s)<2:continue
-                        record=Record(title=unicode(s[1]),artist=unicode(s[0]),
-                             cover=unicode(data[i]['cover']) if data[i].has_key('cover') else '',cat_no=unicode(data[i]['cat_no']) if data[i].has_key('cat_no') else ''
-                             ,label=unicode(data[i]['label']) if data[i].has_key('label') else '',
+                        record=Record(title=unicode(s[1],errors='replace'),artist=unicode(s[0],errors='replace'),
+                             cover=unicode(data[i]['cover']) if data[i].has_key('cover') else '',cat_no=unicode(data[i]['cat_no'],errors='replace') if data[i].has_key('cat_no') else ''
+                             ,label=unicode(data[i]['label'],errors='replace') if data[i].has_key('label') else '',
                             genre=unicode(data[i]['genre']) if data[i].has_key('genre') else '')
 
                     else:
-                        record=Record(title=data[i]['title'] if data[i].has_key('title') else '',artist=data[i]['artist'] if data[i].has_key('artist') else '',
+                        record=Record(unicode(data[i]['title'],errors='replace') if data[i].has_key('title') else '',artist=unicode(data[i]['artist'],errors='replace') if data[i].has_key('artist') else '',
                              cover=data[i]['cover'] if data[i].has_key('cover') else '',cat_no=data[i]['cat_no'] if data[i].has_key('cat_no') else ''
-                             ,label=data[i]['label'] if data[i].has_key('label') else '',
+                             ,label=unicode(data[i]['label'],errors='replace') if data[i].has_key('label') else '',
                              genre=data[i]['genre'] if data[i].has_key('genre') else '')
                     try:
                         record.save()

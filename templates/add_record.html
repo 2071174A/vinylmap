@@ -1,0 +1,13 @@
+{% extends 'includes/page.html' %}
+{% block content %}
+		<h2>Add a record</h2>
+		<form method="post">
+			{% csrf_token %}
+			{% for field in form.visible_fields %}
+				{{ field.errors }}
+				{{ field.help_text }}
+				{{ field }}</br>
+			{% endfor %}
+			<input type="submit" value="Add"/>
+		</form>
+{% endblock %}

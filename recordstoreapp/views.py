@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from models import Record,Store
 from django.db import connection
+from recordstoreapp.forms import RecordForm
 # Create your views here.
 
 # Home page
@@ -77,3 +78,19 @@ def record_view(request):
                 context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
                 context_dict['record'] = record
     return render(request, 'record.html', context_dict)
+	
+def add_record(request):
+	# A HTTP POST?
+	if request.method == 'POST':
+		form = RecordForm(request.POST)
+
+		if form.is_valid():
+			form.save(commit=True)
+
+			return index(request)
+		else:
+			print form.errors
+	else:
+		form = RecordForm()
+
+	return render(request, 'add_record.html', {'form': form})

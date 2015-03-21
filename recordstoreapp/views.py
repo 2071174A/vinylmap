@@ -32,7 +32,7 @@ def search(request):
 		
 		total=len(rec_list)
 		pg=int(request.GET['page']) if 'page' in request.GET else 1
-		ub=min(pg*12,total-pg*12)
+		ub=min(pg*12, total)
 
 		context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
 		context_dict['range'] = range(1,int(total/12)+1)
@@ -47,11 +47,11 @@ def new_releases(request):
 	rec_list = Record.objects.all()
 	total=len(rec_list)
 	pg=int(request.GET['page']) if 'page' in request.GET else 1
-	ub=min(pg*12,total-pg*12)
+	ub=min(pg*12, total)
 
 	context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
-	context_dict['range']=range(1,int(total/12))
-	
+	context_dict['range']=range(1,int(total/12)+1)
+
 	return render(request, 'releases.html', context_dict)
 
 

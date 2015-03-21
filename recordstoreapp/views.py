@@ -35,7 +35,13 @@ def search(request):
 		ub=min(pg*12, total)
 
 		context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
-		context_dict['range']=range(1,int(total/12)+total%12+1)
+		maxrange = int(total/12)
+		if total%12 > 0: 
+			maxrange = maxrange + 1
+		if maxrange == 1: 
+			maxrange = 0
+		context_dict['range'] = range(1,maxrange+1)
+		print total
 		context_dict['q'] = q
 
 	return render(request, 'search.html', context_dict)
@@ -50,7 +56,12 @@ def new_releases(request):
 	ub=min(pg*12, total)
 
 	context_dict['rec_list'] = rec_list[(pg-1)*12:ub]
-	context_dict['range']=range(1,int(total/12)+total%12+1)
+	maxrange = int(total/12)
+	if total%12 > 0: 
+		maxrange = maxrange + 1
+	if maxrange == 1: 
+		maxrange = 0
+	context_dict['range'] = range(1,maxrange+1)
 
 	return render(request, 'releases.html', context_dict)
 

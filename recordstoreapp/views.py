@@ -14,6 +14,10 @@ def about(request):
 	context_dict = {}
 	return render(request, 'about.html', context_dict)
 
+def faq(request):
+	context_dict = {}
+	return render(request, 'faq.html', context_dict)
+
 def contact(request):
 	context_dict = {}
 	return render(request, 'contact.html', context_dict)

@@ -10,16 +10,18 @@
 					<img src="{% static 'egg.png' %}"/>
 				{% endif %}
 			</div>
+			<div class="recordinfo">
 			<strong>Artist: </strong> {{record.artist}}<br/>
 			<strong>Label: </strong> {{record.label}}<br/>
 			<strong>Catalogue #:</strong> {{record.cat_no}}<br/>
+			</div>
 		{% if stores %}
-			<br/>
-			<table>
+			<table class="stores">
 				{% for s in stores %}
-					<tr><td><a href="{{s.link}}">{{s.link}}</a></td><td><strong>Price: </strong>{{s.price}}</td></tr>
+					<tr><td><a href="{{s.link}}">{{s.name}}</a></td><td><strong>Price: </strong>{% if s.price %}{{s.price}}{% else %}Not Available{% endif %}</td></tr>
 				{% endfor %}
 			</table>
 		{% endif %}
+		Your store not included? Add it <a href="{% url 'add_store' record.id %}">here</a>
 	{% endif %}
 {% endblock %}

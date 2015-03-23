@@ -95,8 +95,11 @@ def add_record(request):
 	
 def add_store(request, record_id):
 	try:
-		rec = Record.objects.get(id=record_id)
-	except Record.DoesNotExist:
+	    if not isinstance(record_id, int):
+	        rec = None
+	    else:
+		    rec = Record.objects.get(id=record_id)
+	except:
 		rec = None
 	if request.method == 'POST':
 		form = StoreForm(request.POST)

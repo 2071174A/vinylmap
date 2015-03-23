@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-{% load static %}
+<!DOCTYPE html> {% load static %}
 <html>
 	<head>
 		<link type="text/css" rel="stylesheet" href="{% static 'style.css' %}" />
@@ -10,31 +9,21 @@
 		<div class="main">
 			<div class="header">
 				<div id="textlogo">
-					vinylmaps<br/>
-					<span>
-						helping you get lost in sound
-					</span>
+					vinylmaps<br/> 
+					<span>helping you get lost in sound</span> 
 				</div>
 			</div>
-			<div class="topmenu">
-				{% include 'includes/topmenu.html' %}
-			</div>
-			<div class="nav">
-				{% include 'includes/navmenu.html' %}
-			</div>
-			<div class="content">
-				{% block content %}
-				{% endblock %}
-			</div>
-			<div class="footer">
-				This website is made by human beings and does not enforce copyright restrictions on you. <br/>
+			<div class="topmenu">{% include 'includes/topmenu.html' %}</div>
+			<div class="nav">{% include 'includes/navmenu.html' %}</div>
+			<div class="content">{% block content %} {% endblock %}</div>
+			<div class="footer">This website is made by human beings and does not enforce copyright restrictions on you.
 				<br/>
-				Shout-outs to Tony, Rubadub crew, Scotch Bonnet & Mungo's Hi-Fi, Gantz, the people who go next to the booth to ask for "some normal music", LXC at Alphacut, and to all independent DJs and producers. <br/>
+				<br/> Shout-outs to Tony, Rubadub crew, Scotch Bonnet & Mungo's Hi Fi, Gantz, the people who go next to the booth to ask for "some normal music", LXC at Alphacut, and to all independent DJs and producers.
+				<br/> 
 			</div>
 		</div>
 		<div id="gw2holder">
-			<div id="gw2nochar">
-			</div>
+			<div id="gw2nochar"> </div>
 		</div>
 	</body>
 </html>

@@ -12,11 +12,11 @@
 			<div class="releasebox">
 				<div class="cover">
 					<a href="/records/?record_id={{record.0}}">
-						{% if record.3 %}
-							<img src="{% static record.3 %}"/>
-						{% else %}
-							<img src="{% static 'egg.png' %}"/>
-						{% endif %}
+					{% if record.3 %}
+						<img src="{% static record.3 %}"/>
+					{% else %}
+						<img src="{% static 'egg.png' %}"/>
+					{% endif %}
 					</a>
 				</div>
 				<div class="title">
@@ -28,8 +28,8 @@
 			</div>
 			{% endfor %}
 		{%else%}
-		No data available<br/>
-		<br/>
+			No data available<br/>
+			<br/>
 		{% endif %}
 	</div>
 {% endblock %}

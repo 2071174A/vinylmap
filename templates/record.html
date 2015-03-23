@@ -2,23 +2,26 @@
 {% load static %}
 {% block content %}
 	{% if record %}
-			<h1>{{record.title}}</h1>
-			<div class="coverbig">
-				{% if record.cover %}
-					<img src="{% static record.cover %}"/>
-				{% else %}
-					<img src="{% static 'egg.png' %}"/>
-				{% endif %}
-			</div>
-			<div class="recordinfo">
+		<h1>{{record.title}}</h1>
+		<div class="coverbig">
+			{% if record.cover %}
+			<img src="{% static record.cover %}"/>
+			{% else %}
+			<img src="{% static 'egg.png' %}"/>
+			{% endif %}
+		</div>
+		<div class="recordinfo">
 			<strong>Artist: </strong> {{record.artist}}<br/>
 			<strong>Label: </strong> {{record.label}}<br/>
 			<strong>Catalogue #:</strong> {{record.cat_no}}<br/>
-			</div>
+		</div>
 		{% if stores %}
 			<table class="stores">
 				{% for s in stores %}
-					<tr><td><a href="{{s.link}}">{{s.name}}</a></td><td><strong>Price: </strong>{% if s.price %}{{s.price}}{% else %}Not Available{% endif %}</td></tr>
+				<tr>
+					<td><a href="{{s.link}}">{{s.name}}</a></td>
+					<td><strong>Price: </strong>{% if s.price %}{{s.price}}{% else %}Not Available{% endif %}</td>
+				</tr>
 				{% endfor %}
 			</table>
 		{% endif %}

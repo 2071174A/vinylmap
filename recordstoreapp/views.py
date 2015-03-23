@@ -82,7 +82,7 @@ def record_view(request):
                     context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
                     context_dict['record'] = record
     except ObjectDoesNotExist:
-        raise Http404
+        return render(request,'404.html',{'error_info': 'Invalid record request'})
     return render(request, 'record.html', context_dict)
 
 def add_record(request):

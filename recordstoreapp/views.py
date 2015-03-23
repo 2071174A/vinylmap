@@ -97,10 +97,11 @@ def add_record(request):
 	
 def add_store(request, record_id):
 	try:
-	    if not isinstance(record_id, int):
-	        rec = None
-	    else:
-		    rec = Record.objects.get(id=record_id)
+		record_id = int(record_id)
+		if not isinstance(record_id, int):
+			rec = None
+		else:
+			rec = Record.objects.get(id=record_id)
 	except:
 		rec = None
 	if request.method == 'POST':
@@ -110,7 +111,7 @@ def add_store(request, record_id):
 				s = form.save(commit=False)
 				s.save()
 				rec.stores.add(s)
-				return redirect(reverse('records') + '?record_id=' + record_id)
+				return redirect(reverse('records') + '?record_id=' + str(record_id))
 		else:
 			print form.errors
 	else:

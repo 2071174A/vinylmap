@@ -5,6 +5,7 @@ from django.db import models
 class Store(models.Model):
     price=models.CharField(max_length=40,default='')
     link=models.URLField(blank=True)
+    name=models.CharField(max_length=40)
     def __unicode__(self):
         return self.link
 

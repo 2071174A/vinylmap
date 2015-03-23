@@ -2,26 +2,21 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseNotFound
 from models import Record,Store
 from django.db import connection
-from recordstoreapp.forms import RecordForm
-# Create your views here.
+from recordstoreapp.forms import RecordForm,StoreForm
+from django.shortcuts import redirect
+from django.core.urlresolvers import reverse
 
-# Home page
 def index(request):
-    context_dict = {}
-
-    return render(request, 'index.html', context_dict)
+	context_dict = {}
+	return render(request, 'index.html', context_dict)
 
 def about(request):
-    context_dict = {}
-    return render(request, 'about.html', context_dict)
+	context_dict = {}
+	return render(request, 'about.html', context_dict)
 
-
-#Email addresses or maybe a form to request a new item be added to the db.
 def contact(request):
-    context_dict = {}
-
-    return render(request, 'contact.html', context_dict)
-
+	context_dict = {}
+	return render(request, 'contact.html', context_dict)
 
 def search(request):
 	context_dict = {}
@@ -68,19 +63,18 @@ def new_releases(request):
 
 
 def record_view(request):
-    page_id = None
-    context_dict = {}
-    if request.method == 'GET':
-        if 'record_id' in request.GET:
-            record_id = request.GET['record_id']
-            if record_id:
-                record = Record.objects.get(id=record_id)
-                context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
-                context_dict['record'] = record
-    return render(request, 'record.html', context_dict)
+	page_id = None
+	context_dict = {}
+	if request.method == 'GET':
+		if 'record_id' in request.GET:
+			record_id = request.GET['record_id']
+			if record_id:
+				record = Record.objects.get(id=record_id)
+				context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
+				context_dict['record'] = record
+	return render(request, 'record.html', context_dict)
 	
 def add_record(request):
-	# A HTTP POST?
 	if request.method == 'POST':
 		form = RecordForm(request.POST)
 
@@ -94,3 +88,25 @@ def add_record(request):
 		form = RecordForm()
 
 	return render(request, 'add_record.html', {'form': form})
+	
+def add_store(request, record_id):
+	try:
+		rec = Record.objects.get(id=record_id)
+	except Record.DoesNotExist:
+		rec = None
+	if request.method == 'POST':
+		form = StoreForm(request.POST)
+		if form.is_valid():
+			if rec:
+				s = form.save(commit=False)
+				s.save()
+				rec.stores.add(s)
+				return redirect(reverse('records') + '?record_id=' + record_id)
+		else:
+			print form.errors
+	else:
+		form = StoreForm()
+
+	context_dict = {'form': form, 'record': rec}
+
+	return render(request, 'add_store.html', context_dict)

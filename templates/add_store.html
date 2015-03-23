@@ -1,6 +1,6 @@
 {% extends 'includes/page.html' %}
 {% block content %}
-		<h2>Add a record</h2>
+		<h2>Add a store</h2>
 		<form method="post">
 			{% csrf_token %}
 			{% for field in form.visible_fields %}

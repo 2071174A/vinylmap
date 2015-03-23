@@ -5,6 +5,8 @@ from django.db import connection
 from recordstoreapp.forms import RecordForm,StoreForm
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
 
 def index(request):
 	context_dict = {}
@@ -69,17 +71,20 @@ def new_releases(request):
 
 
 def record_view(request):
-	page_id = None
-	context_dict = {}
-	if request.method == 'GET':
-		if 'record_id' in request.GET:
-			record_id = request.GET['record_id']
-			if record_id:
-				record = Record.objects.get(id=record_id)
-				context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
-				context_dict['record'] = record
-	return render(request, 'record.html', context_dict)
-	
+    try:
+        page_id = None
+        context_dict = {}
+        if request.method == 'GET':
+            if 'record_id' in request.GET:
+                record_id = request.GET['record_id']
+                if record_id:
+                    record = Record.objects.get(id=record_id)
+                    context_dict['stores']=Store.objects.filter(record=record)#record.stores.all()
+                    context_dict['record'] = record
+    except ObjectDoesNotExist:
+        raise Http404
+    return render(request, 'record.html', context_dict)
+
 def add_record(request):
 	if request.method == 'POST':
 		form = RecordForm(request.POST)

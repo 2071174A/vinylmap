@@ -1,4 +1,19 @@
-#TODO: README file.
+Description:
+
+Vinyl maps is a search engine for music records. It’s created as part of a coursework 
+
+--------------------------------
+Run on your own machine:
+-	Clone the repository
+-	Open cmd and change the directory to vilnylmap
+-	Run $python manage.py runserver
+-	Load http://127.0.0.1:8000/ in your browser
+-	Get lost in sound
+-------------------------------
+Authors
+-	Alexander Mladenov
+-	Anton Petrov
+-	Kristina Lazarova
+-	Ross Anderson
+----------------------------------
 #TODO: automated tests from the book.
-#TODO: a non-crawler population script.
-#TODO: update specifications to match the project

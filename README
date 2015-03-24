@@ -1,15 +1,18 @@
 Description:
 
-Vinyl maps is a search engine for music records. It’s created as part of a coursework 
+Vinyl maps is a search engine for vinyl music records. It’s created as part of a 2nd year Web-app coursework module. Vinylmap crawls the web and finds newly released records, aggregating the results and making them easily searchable and purchasable by users from a multitude of stores. Users can find records, a link to its store page and quickly view its price.
 
 --------------------------------
 Run on your own machine:
 -	Clone the repository
--	Open cmd and change the directory to vilnylmap
+-	Open cmd and change the directory to vinylmap
+-	Virtual environment recommended: use requirements.txt to install the dependencies ($pip install -r requirements.txt)
+-	Run crawler.py to pull record information from stores, placing the script in a cronjob is recommended to keep data current
 -	Run $python manage.py runserver
 -	Load http://127.0.0.1:8000/ in your browser
 -	Get lost in sound
 -------------------------------
+
 Authors
 -	Alexander Mladenov
 -	Anton Petrov

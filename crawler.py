@@ -173,7 +173,7 @@ class Crawler:
                     record.cover=data[i]['cover'] if record.cover=='' else record.cover
                     record.save()
                     if store is not None :record.stores.add(store)
-                except Record.DoesNotExist,KeyError:
+                except:
                     record=None
                     if not data[i].has_key('artist') or not data[i].has_key('title'):
                         s=re.split(r'\s\W\s',data[i]['title']) if data[i].has_key('title') else re.split(r'\s\W\s',data[i]['artist'])

@@ -22,7 +22,10 @@ from classifiers import *
 def get(url):
     request=urllib2.Request(url)
     request.add_header(key="User-agent",val="tCrawler 1.0")
-    response=urllib2.urlopen(request)
+    try:
+        response=urllib2.urlopen(request)
+    except:
+        return "page error"
     return response.read()
 def download(url,path):
     #import os.path
@@ -37,7 +40,7 @@ def fixurl(mess,url):
 def loadXpath(file):
     print 'loading xpath'
     sm={}
-    fl=open(file,"r").read().decode('mbcs').splitlines()
+    fl=open(file,"r").read().decode('windows-1251').splitlines()
     for i in range(len(fl)):
         if fl[i].startswith('//'):continue
         l=fl[i].split("!")
@@ -68,7 +71,12 @@ class Minion(threading.Thread):
                 self.queue.task_done()
             elif self.job["job"]=="retrieve":
                 print 'attempting to retrieve data'
-                page=HtmlPage(get(self.job['url']))
+                pg=get(self.job['url'])
+                if pg=='page error':
+                     self.queue.task_done()
+                     print pg
+                     continue
+                page=HtmlPage(pg)
                 res=page.getFromXPath(self.master.xpaths[self.job['url']])
                 self.queue.task_done()
                 if res==None:
@@ -89,6 +97,10 @@ class Minion(threading.Thread):
             elif self.job["job"]=="analyze":
                 print 'analyzing page ' + self.job['url']
                 page=get(self.job['url'])
+                if page=="page error":
+                    self.queue.task_done()
+                    print page
+                    continue
                 if re.match(r"(not found)|(doesn't exist)",page):
                     self.queue.task_done()
                     del self.master.xpaths[self.job['url']]
@@ -195,7 +207,6 @@ class Crawler:
                         continue
             self.res_queue.task_done()
         print 'job done'
-#p=HtmlPage(open(os.path.dirname(os.path.realpath(__file__))+'/t.html','r').read())
 from django.core.wsgi import get_wsgi_application
 os.environ['DJANGO_SETTINGS_MODULE'] = 'vinylmap_project.settings'
 application = get_wsgi_application()

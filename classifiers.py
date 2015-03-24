@@ -4,7 +4,7 @@ import re
 
 def loadSModel(file):
     sm={}
-    fl=open(file,"r").read().decode('mbcs').splitlines()
+    fl=open(file,"r").read().decode('windows-1251').splitlines()
     for i in range(len(fl)):
         if fl[i].startswith('//'):continue
         l=fl[i].split("==")

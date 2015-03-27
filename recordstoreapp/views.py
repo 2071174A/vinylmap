@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
+import json
 
 def index(request):
 	context_dict = {}
@@ -125,3 +126,19 @@ def add_store(request, record_id):
 	context_dict = {'form': form, 'record': rec}
 
 	return render(request, 'add_store.html', context_dict)
+
+
+def get_names(request):
+    if request.is_ajax():
+        q = request.GET['q']
+        Records = Record.objects.filter(title = q )[:20]
+        results = []
+        for record in Records:
+            record_json = {}
+            record_json['label']= record.title
+            results.append(record_json)
+        data = json.dumps(results)
+    else:
+        data = 'fail'
+    mimetype = 'application/json'
+    return HttpResponse(data, mimetype)

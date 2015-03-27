@@ -3,8 +3,9 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'vinylmap_project.settings')
 import django
 django.setup()
 
-from recordstoreapp.models import Record, Store
-
+"""
+Population script for testing purposes. For pulling real data from websites, run crawler.py instead.
+"""
 def populate():
 	record1 = add_record(
 		title="Record Title / Test Dub",

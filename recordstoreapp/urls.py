@@ -12,4 +12,5 @@ urlpatterns = patterns('',
 	url(r'^add_record/$', views.add_record, name='add_record'),
 	url(r'^add_store/(?P<record_id>\w+)$', views.add_store, name='add_store'),
 	url(r'^faq/$', views.faq, name='faq'),
+    url(r'^get_names/$', views.get_names, name='get_names'),
     )

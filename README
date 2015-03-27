@@ -1,6 +1,6 @@
 Description:
 
-Vinyl maps is a search engine for vinyl music records. It’s created as part of a 2nd year Web-app coursework module. Vinylmap crawls the web and finds newly released records, aggregating the results and making them easily searchable and purchasable by users from a multitude of stores. Users can find records, a link to its store page and quickly view its price.
+Vinylmaps is a search engine for vinyl music records. It’s created as part of a 2nd year Web-app coursework module. Vinylmaps crawls the web and finds newly released records; aggregating the results and making them easily searchable and purchasable by users from a multitude of stores. Users can find records, a link to its store page and quickly view its price. Users may also search through catalogue number or record label.
 
 --------------------------------
 Run on your own machine:
@@ -20,4 +20,4 @@ Authors
 -	Ross Anderson
 ----------------------------------
 #TODO: automated tests from the book.
-#NOTE: crawler is working, but pythonanywhere permissions prevent it from crawling data
+#NOTE: crawler is working, but pythonanywhere permissions prevent it from crawling data. To update the records on vinylmaps one must populate a database and push it to the server.

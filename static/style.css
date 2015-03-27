@@ -59,7 +59,7 @@ display: inline;
 div.topmenu li + li:before
 {
 content:"| ";
-margin: 0 20px 0 20px;
+    margin: 0 20px 0 20px;
 }
 div.topmenu a
 {
@@ -262,6 +262,13 @@ line-height: 40px;
 
 }
 
+#search{
+}
+#search input {
+	border: 0 none;
+	color: #333333;
+
+}
 /*
 @keyframes animheader
 {

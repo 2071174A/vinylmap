@@ -20,7 +20,7 @@ class Record(models.Model):
     time=models.DateTimeField(auto_now=True)
     stores=models.ManyToManyField(Store)
     def __unicode__(self):
-        return self.title
+         return self.title
 
 
 

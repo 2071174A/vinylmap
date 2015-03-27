@@ -1,6 +1,7 @@
-<form method="get" action="{% url 'search' %}">
-	<input placeholder="search..." name="q"/>
-	<input type="submit" value="Go"/>
+<form method="get" id = "search" action="{% url 'search' %}">
+<input type="text" class="search" value="{{ query|default:'search..'}}"  name="q" onfocus="if(this.value == 'search..') { this.value = ''; }"
+        onblur="if(this.value == '') { this.value = 'search..'; }">
+    <input type="submit" value="Go"/>
 </form>
 <br/>
 <ul class="navmenu">

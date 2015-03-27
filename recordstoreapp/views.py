@@ -126,6 +126,7 @@ def add_store(request, record_id):
 	context_dict = {'form': form, 'record': rec}
 
 	return render(request, 'add_store.html', context_dict)
+<<<<<<< HEAD
 
 
 def get_names(request):
@@ -142,3 +143,5 @@ def get_names(request):
         data = 'fail'
     mimetype = 'application/json'
     return HttpResponse(data, mimetype)
+=======
+>>>>>>> 736d51ce94e5da83c9dcb2641b7f5f0c0b3d7afc
